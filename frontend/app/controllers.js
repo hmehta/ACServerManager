@@ -186,14 +186,23 @@ angular.module('acServerManager')
                     return _.pullAt(randoms, _.random(0, randoms.length - 1))[0];
                 });
             },
-            random: function(start, end) {
-                return _.random(start, end);
+            random: function(start, end, floating) {
+                return _.random(start, end, floating);
             }
         };
 
 		$scope.sessions = [];
 		$scope.alerts = [];
         $scope.random = {
+            enableRandom: function(name) {
+                if (!_.has($scope.random, name)) {
+                    return;
+                }
+                $scope.random[name].enabled = !$scope.random[name].enabled;
+                if ($scope.random[name].enabled) {
+                    $scope.random[name].callback();
+                }
+            },
             cars: {
                 enabled: false,
                 callback: function() {
@@ -205,8 +214,18 @@ angular.module('acServerManager')
                     });
                 },
                 min: 1,
-                max: 24,
                 value: 1
+            },
+            sunAngle: {
+                enabled: false,
+                callback: function() {
+                    $scope.server.SUN_ANGLE = RandomService.random(
+                        $scope.random.sunAngle.min, $scope.random.sunAngle.max, true);
+                },
+                min: -60.0,
+                max: 60.0,
+                step: 0.2,
+                value: 0
             },
             track: {
                 callback: function() {
@@ -219,13 +238,7 @@ angular.module('acServerManager')
                 },
             },
             wind: {
-                enabled: true,
-                enable: function() {
-                    $scope.random.wind.enabled = !$scope.random.wind.enabled;
-                    if ($scope.random.wind.enabled) {
-                        $scope.random.wind.callback();
-                    }
-                },
+                enabled: false,
                 callback: function() {
                     _.forEach(['baseMin', 'baseMax', 'direction', 'variation'], function(item) {
                         $scope.random.wind[item].callback();

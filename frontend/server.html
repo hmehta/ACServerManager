@@ -183,7 +183,7 @@
                                                 <label>Random</label>
                                                 <button type="button"
                                                         class="btn btn-default btn-sm pe-7s-angle-down-circle"
-                                                        ng-click="random.cars.enabled = !random.cars.enabled">
+                                                        ng-click="random.enableRandom('cars')">
                                                 </button>
                                                 <div class="dropdown-menu fluid-container">
                                                     <div class="row form-group form-group-sm">
@@ -194,7 +194,7 @@
                                                             <slider ng-model="random.cars.value"
                                                                     ng-change="random.cars.callback()"
                                                                     min="random.cars.min"
-                                                                    max="random.cars.max"
+                                                                    max="cars.length"
                                                                     value="random.cars.value">
                                                             </slider>
                                                         </div>
@@ -391,7 +391,7 @@
                                         <label>Random</label>
                                         <button type="button"
                                                 class="btn btn-default btn-sm pe-7s-angle-down-circle"
-                                                ng-click="random.wind.enable()">
+                                                ng-click="random.enableRandom('wind')">
                                         </button>
                                         <div class="dropdown-menu fluid-container">
                                             <div class="row form-group form-group-sm">
@@ -515,6 +515,35 @@
 									<div class="col-sm-4">
 										<div class="form-group" show-errors>
 											<label>Sun Angle</label>
+                                            <div class="randomizer dropdown {{random.sunAngle.enabled ? 'open' : ''}}">
+                                                <label>Random</label>
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                        ng-click="random.enableRandom('sunAngle')">
+                                                </button>
+                                                <div class="dropdown-menu fluid-container">
+                                                    <div class="row form-group form-group-sm">
+                                                        <div class="col-sm-2">
+                                                            <label>Sun angle</label>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            {{server.SUN_ANGLE|number:2}}⁰
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <slider ng-model="random.sunAngle.range"
+                                                                    ng-change="random.sunAngle.callback()"
+                                                                    min="random.sunAngle.min"
+                                                                    max="random.sunAngle.max"
+                                                                    range="true"
+                                                                    step="random.sunAngle.step"
+                                                                    ticks="random.sunAngle.ticks"
+                                                                    ticks-labels="random.sunAngle.ticksLabels"
+                                                                    value="random.sunAngle.range">
+                                                            </slider>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 											<input class="form-control" name="sun_angle" ng-model="server.SUN_ANGLE"/>
 										</div>						
 									</div>
