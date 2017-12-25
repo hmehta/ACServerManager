@@ -177,6 +177,9 @@ angular.module('acServerManager')
 	.controller('ServerCtrl', function ($scope, $filter, $timeout, CarService, TrackService, ServerService, BookService, PracticeService, QualifyService, RaceService, TyreService, WeatherService) {
         // TODO => services.js
         var RandomService = {
+            choice: function(list) {
+                return _.nth(list, _.random(0, list.length - 1));
+            },
             choices: function(list, num) {
                 var randoms = _.slice(list);
                 return _.map(_.range(num), function() {
@@ -201,7 +204,14 @@ angular.module('acServerManager')
                 value: 1
             },
             track: {
-                enabled: false
+                callback: function() {
+                    var track = RandomService.choice($scope.tracks);
+                    if (track.configs.length !== 0) {
+                        $scope.server.CONFIG_TRACK = RandomService.choice(track.configs);
+                    }
+                    $scope.selectedTracks = track.name;
+                    $scope.trackChanged();
+                },
             }
         };
 		$scope.weatherSettings = [];

@@ -140,8 +140,7 @@ div.randomizer > div.dropdown-menu {
     display: block;
     left: unset;
     right: 0px;
-    top: 110%;
-    width: 200%;
+    width: 300%;
     padding: 0.5em 0;
     border-radius: 4px;
     -webkit-box-shadow: -2px 2px 2px 0px rgba(102,102,102,0.75);
@@ -163,7 +162,7 @@ div.randomizer > div.dropdown-menu input[type="number"] {
     border-radius: 4px;
     border-bottom-color: #e3e3e3;
 }
-div.randomizer > div.dropdown-menu button.btn-sm {
+div.randomizer > button.btn-sm {
     min-height: 30px;
     font-weight: bold;
 }
