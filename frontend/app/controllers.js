@@ -199,9 +199,6 @@ angular.module('acServerManager')
                     return;
                 }
                 $scope.random[name].enabled = !$scope.random[name].enabled;
-                if ($scope.random[name].enabled) {
-                    $scope.random[name].callback();
-                }
             },
             cars: {
                 enabled: false,
@@ -248,8 +245,11 @@ angular.module('acServerManager')
                 }
             },
             weather: {
-                enabled: true,
+                enabled: false,
                 callback: function() {
+                    if ($scope.weatherSettings.length > $scope.random.weather.value) {
+                        $scope.random.weather.value = $scope.weatherSettings.length;
+                    }
                     $scope.weatherSettings = _.map(_.range($scope.random.weather.value), function() {
                         var weather = angular.copy(newWeather);
                         weather.GRAPHICS = RandomService.choice(
@@ -261,10 +261,10 @@ angular.module('acServerManager')
                         weather.BASE_TEMPERATURE_ROAD = RandomService.random(
                             $scope.random.weather.baseRoad.min,
                             $scope.random.weather.baseRoad.max);
-                        weather.BASE_VARIATION_AMBIENT = RandomService.random(
+                        weather.VARIATION_AMBIENT = RandomService.random(
                             $scope.random.weather.varAmbient.min,
                             $scope.random.weather.varAmbient.max);
-                        weather.BASE_VARIATION_ROAD = RandomService.random(
+                        weather.VARIATION_ROAD = RandomService.random(
                             $scope.random.weather.varRoad.min,
                             $scope.random.weather.varRoad.max);
                         return weather;
