@@ -186,13 +186,16 @@ angular.module('acServerManager')
                     return _.pullAt(randoms, _.random(0, randoms.length - 1))[0];
                 });
             },
+            random: function(start, end) {
+                return _.random(start, end);
+            }
         };
 
 		$scope.sessions = [];
 		$scope.alerts = [];
         $scope.random = {
             cars: {
-                enabled: true,
+                enabled: false,
                 callback: function() {
                     $scope.selectedCars = RandomService.choices($scope.cars, $scope.random.cars.value);
                     $scope.carsChanged(function() {
@@ -201,6 +204,8 @@ angular.module('acServerManager')
                         $scope.tyresChanged();
                     });
                 },
+                min: 1,
+                max: 24,
                 value: 1
             },
             track: {
@@ -212,6 +217,69 @@ angular.module('acServerManager')
                     $scope.selectedTracks = track.name;
                     $scope.trackChanged();
                 },
+            },
+            wind: {
+                enabled: true,
+                enable: function() {
+                    $scope.random.wind.enabled = !$scope.random.wind.enabled;
+                    if ($scope.random.wind.enabled) {
+                        $scope.random.wind.callback();
+                    }
+                },
+                callback: function() {
+                    _.forEach(['baseMin', 'baseMax', 'direction', 'variation'], function(item) {
+                        $scope.random.wind[item].callback();
+                    });
+                },
+                baseTicks: _.range(0, 81, 20),
+                baseTicksLabels: _.map(_.range(0, 81, 20), function(tick) {
+                    return tick + 'm/s';
+                }),
+                baseMax: {
+                    min: 0,
+                    max: 80,
+                    range: [0, 50],
+                    callback: function() {
+                        $scope.server.WIND_BASE_SPEED_MAX = RandomService.random(
+                            $scope.random.wind.baseMax.min,
+                            $scope.random.wind.baseMax.max);
+                    }
+                },
+                baseMin: {
+                    min: 0,
+                    max: 80,
+                    range: [0, 50],
+                    callback: function() {
+                        $scope.server.WIND_BASE_SPEED_MIN = RandomService.random(
+                            $scope.random.wind.baseMin.min,
+                            $scope.random.wind.baseMin.max);
+                    }
+                },
+                dirTicks: _.range(0, 361, 60),
+                dirTicksLabels: _.map(_.range(0, 361, 60), function(tick) {
+                    return tick + '⁰';
+                }),
+                direction: {
+                    min: 0,
+                    max: 360,
+                    range: [0, 360],
+                    ticks: _.range(0, 360, 20),
+                    callback: function() {
+                        $scope.server.WIND_BASE_DIRECTION = RandomService.random(
+                            $scope.random.wind.direction.min,
+                            $scope.random.wind.direction.max);
+                    }
+                },
+                variation: {
+                    min: 0,
+                    max: 360,
+                    range: [0, 360],
+                    callback: function() {
+                        $scope.server.WIND_VARIATION_DIRECTION = RandomService.random(
+                            $scope.random.wind.variation.min,
+                            $scope.random.wind.variation.max);
+                    }
+                }
             }
         };
 		$scope.weatherSettings = [];

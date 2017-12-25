@@ -14,6 +14,7 @@
 		<link href="css/angular-toggle-switch-bootstrap-3.css" rel="stylesheet" />
 		<link href="css/animate.min.css" rel="stylesheet" />
 		<link href="css/light-bootstrap-dashboard.css" rel="stylesheet" />
+        <link href="css/bootstrap-slider.min.css" rel="stylesheet" />
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css' />
@@ -186,27 +187,32 @@
                                                 </button>
                                                 <div class="dropdown-menu fluid-container">
                                                     <div class="row form-group form-group-sm">
-                                                        <div class="col-sm-5">
+                                                        <div class="col-sm-4">
                                                             <label># of cars</label>
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <input type="number" min="1" class="form-control input-sm"
-                                                                   ng-model="random.cars.value" />
+                                                        <div class="col-sm-8">
+                                                            <slider ng-model="random.cars.value"
+                                                                    ng-change="random.cars.callback()"
+                                                                    min="random.cars.min"
+                                                                    max="random.cars.max"
+                                                                    value="random.cars.value">
+                                                            </slider>
                                                         </div>
-                                                        <div class="col-sm-3">
-                                                            <button type="button"
-                                                                    ng-click="random.cars.callback()"
-                                                                    class="btn btn-default btn-sm pe-7s-shuffle" />
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <label>Currently selected:</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row selectedCars">
+                                                        <div class="col-sm-12">
+                                                            <span class="label label-primary"
+                                                                  ng-repeat="car in selectedCars">{{car}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 											<select multiple size="10" class="form-control" ng-model="selectedCars" ng-options="car as car for car in cars" ng-change="carsChanged()"></select>
-                                            <div class="selectedCars">
-                                                <label>Currently selected:</label>
-                                                <span class="label label-primary"
-                                                      ng-repeat="car in selectedCars">{{car}}</span>
-                                            </div>
 										</div>
 									</div>
 									
@@ -380,7 +386,98 @@
 							</fieldset>
 
 							<fieldset class="top10">
-								<legend>Wind Options</legend>
+								<legend>Wind Options
+                                    <div class="randomizer dropdown {{random.wind.enabled ? 'open' : ''}}">
+                                        <label>Random</label>
+                                        <button type="button"
+                                                class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                ng-click="random.wind.enable()">
+                                        </button>
+                                        <div class="dropdown-menu fluid-container">
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-12">
+                                                    <a href="#"
+                                                       ng-click="random.wind.callback()">Randomize all</a>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-3">
+                                                    Wind base minimum:
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{server.WIND_BASE_SPEED_MIN}}m/s
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.wind.baseMin.range"
+                                                            ng-change="random.wind.baseMin.callback()"
+                                                            min="random.wind.baseMin.min"
+                                                            max="random.wind.baseMin.max"
+                                                            range="true"
+                                                            ticks="random.wind.baseTicks"
+                                                            ticks-labels="random.wind.baseTicksLabels"
+                                                            value="random.wind.baseMin.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-3">
+                                                    Wind base maximum:
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{server.WIND_BASE_SPEED_MAX}}m/s
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.wind.baseMax.range"
+                                                            ng-change="random.wind.baseMax.callback()"
+                                                            min="random.wind.baseMax.min"
+                                                            max="random.wind.baseMax.max"
+                                                            range="true"
+                                                            ticks="random.wind.baseTicks"
+                                                            value="random.wind.baseMax.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-3">
+                                                    Wind base direction:
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{server.WIND_BASE_DIRECTION}}⁰
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.wind.direction.range"
+                                                            ng-change="random.wind.direction.callback()"
+                                                            min="random.wind.direction.min"
+                                                            max="random.wind.direction.max"
+                                                            range="true"
+                                                            ticks="random.wind.dirTicks"
+                                                            ticks-labels="random.wind.dirTicksLabels"
+                                                            value="random.wind.direction.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-3">
+                                                    Wind direction variation:
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{server.WIND_VARIATION_DIRECTION}}⁰
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.wind.variation.range"
+                                                            ng-change="random.wind.variation.callback()"
+                                                            min="random.wind.variation.min"
+                                                            max="random.wind.variation.max"
+                                                            range="true"
+                                                            ticks="random.wind.dirTicks"
+                                                            value="random.wind.variation.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </legend>
+
 								<div class="row">
 									<div class="col-sm-4">
 										<div class="form-group" show-errors>
@@ -591,12 +688,14 @@
 	<script src="js/bootstrap-checkbox-radio-switch.js"></script>
     <script src="js/bootstrap-notify.js"></script>
 	<script src="js/light-bootstrap-dashboard.js"></script>
+    <script src="js/bootstrap-slider.min.js"></script>
 	<script src="js/angular/angular.min.js"></script>
     <script src="js/ng-file-upload-shim.min.js"></script>
     <script src="js/ng-file-upload.min.js"></script>
 	<script src="js/angular/angular-resource.min.js"></script>
 	<script src="js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
 	<script src="js/angular/show-errors.min.js"></script>
+    <script src="js/ng-bootstrap-slider.js"></script>
     <script src="js/lodash.min.js"></script>
 	<script src="app/app.js"></script>
 	<script src="app/angular-toggle-switch.js"></script>

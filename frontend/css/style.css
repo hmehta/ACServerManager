@@ -120,11 +120,10 @@ span.skinName {
     display: inline-block;
     margin: 2px;
 }
-div.selectedCars > span.label {
-    margin: 0.2em;
-}
 div.randomizer {
     float:right;
+    width: 25%;
+    text-align: right;
 }
 div.randomizer > label {
     display: inline;
@@ -140,7 +139,7 @@ div.randomizer > div.dropdown-menu {
     display: block;
     left: unset;
     right: 0px;
-    width: 300%;
+    width: 400%;
     padding: 0.5em 0;
     border-radius: 4px;
     -webkit-box-shadow: -2px 2px 2px 0px rgba(102,102,102,0.75);
@@ -166,3 +165,8 @@ div.randomizer > button.btn-sm {
     min-height: 30px;
     font-weight: bold;
 }
+div.randomizer div.selectedCars span.label {
+    margin: 0.2em;
+    display: inline-block;
+}
+
