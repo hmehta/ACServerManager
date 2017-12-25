@@ -1,7 +1,8 @@
 'use strict';
 
 angular
-    .module('acServerManager', ['acServerManager.services', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'toggle-switch'])
+    .module('acServerManager', ['acServerManager.services', 'ui.bootstrap', 'ui.bootstrap.showErrors',
+                                'ui.bootstrap-slider', 'toggle-switch'])
     // Use lodash in controllers
     .constant('_', window._)
     .directive('stringToNumber', function() {
