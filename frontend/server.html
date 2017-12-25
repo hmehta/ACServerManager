@@ -178,7 +178,37 @@
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Cars</label>
+                                            <div class="randomizer dropdown {{random.cars.enabled ? 'open' : ''}}">
+                                                <label>Random</label>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <toggle-switch class="switch-mini"
+                                                                       ng-model="random.cars.enabled"></toggle-switch>
+                                                    </label>
+                                                </div>
+                                                <div class="dropdown-menu fluid-container">
+                                                    <div class="row form-group form-group-sm">
+                                                        <div class="col-sm-5">
+                                                            <label># of cars</label>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <input type="number" min="1" class="form-control input-sm"
+                                                                   ng-model="random.cars.value" />
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <button type="button"
+                                                                    ng-click="random.cars.callback()"
+                                                                    class="btn btn-default btn-sm pe-7s-shuffle" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 											<select multiple size="10" class="form-control" ng-model="selectedCars" ng-options="car as car for car in cars" ng-change="carsChanged()"></select>
+                                            <div class="selectedCars">
+                                                <label>Currently selected:</label>
+                                                <span class="label label-primary"
+                                                      ng-repeat="car in selectedCars">{{car}}</span>
+                                            </div>
 										</div>
 									</div>
 									
@@ -564,6 +594,7 @@
 	<script src="js/angular/angular-resource.min.js"></script>
 	<script src="js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
 	<script src="js/angular/show-errors.min.js"></script>
+    <script src="js/lodash.min.js"></script>
 	<script src="app/app.js"></script>
 	<script src="app/angular-toggle-switch.js"></script>
 	<script src="app/services.js"></script>
