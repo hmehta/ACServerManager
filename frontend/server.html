@@ -551,6 +551,11 @@
 									<div class="col-sm-4">
 										<div class="form-group" show-errors>
 											<label>Time (hh)</label>
+                                            <div class="randomizer">
+                                                <label>Random</label>
+                                                <button type="button" ng-click="random.hours.callback()"
+                                                                      class="btn btn-default btn-sm pe-7s-shuffle"></button>
+                                            </div>
  											<input class="form-control" name="hours" ng-model="hours"/>
 										</div>						
 									</div>
@@ -558,6 +563,11 @@
 									<div class="col-sm-4">
 										<div class="form-group" show-errors>
 											<label>(mm)</label>
+                                            <div class="randomizer">
+                                                <label>Random</label>
+                                                <button type="button" ng-click="random.mins.callback()"
+                                                                      class="btn btn-default btn-sm pe-7s-shuffle"></button>
+                                            </div>
 											<input class="form-control" name="mins" ng-model="mins"/>
  										</div>	
  									</div>

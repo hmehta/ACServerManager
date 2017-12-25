@@ -237,6 +237,16 @@ angular.module('acServerManager')
                     $scope.trackChanged();
                 },
             },
+            hours: {
+                callback: function() {
+                    $scope.hours = RandomService.random(0, 23);
+                }
+            },
+            mins: {
+                callback: function() {
+                    $scope.mins = RandomService.random(0, 59);
+                }
+            },
             wind: {
                 enabled: false,
                 callback: function() {
