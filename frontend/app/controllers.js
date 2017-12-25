@@ -247,6 +247,80 @@ angular.module('acServerManager')
                     $scope.mins = RandomService.random(0, 59);
                 }
             },
+            weather: {
+                enabled: true,
+                callback: function() {
+                    $scope.weatherSettings = _.map(_.range($scope.random.weather.value), function() {
+                        var weather = angular.copy(newWeather);
+                        weather.GRAPHICS = RandomService.choice(
+                            ['1_heavy_fog', '2_light_fog', '3_clear', '4_mid_clear', '5_light_clouds', '6_mid_clouds',
+                             '7_heavy_clouds']);
+                        weather.BASE_TEMPERATURE_AMBIENT = RandomService.random(
+                            $scope.random.weather.baseAmbient.min,
+                            $scope.random.weather.baseAmbient.max);
+                        weather.BASE_TEMPERATURE_ROAD = RandomService.random(
+                            $scope.random.weather.baseRoad.min,
+                            $scope.random.weather.baseRoad.max);
+                        weather.BASE_VARIATION_AMBIENT = RandomService.random(
+                            $scope.random.weather.varAmbient.min,
+                            $scope.random.weather.varAmbient.max);
+                        weather.BASE_VARIATION_ROAD = RandomService.random(
+                            $scope.random.weather.varRoad.min,
+                            $scope.random.weather.varRoad.max);
+                        return weather;
+                    });
+                },
+                baseAmbient: {
+                    callback: function() {
+                        _.forEach($scope.weatherSettings, function(weather) {
+                            weather.BASE_TEMPERATURE_AMBIENT = RandomService.random(
+                                $scope.random.weather.baseAmbient.min,
+                                $scope.random.weather.baseAmbient.max);
+                        });
+                    },
+                    min: -10,
+                    max: 40,
+                    ticks: _.range(-10, 41, 10),
+                    ticksLabels: _.map(_.range(-10, 41, 10), function(tick) {
+                        return tick + '⁰C';
+                    }),
+                    range: [-10, 40],
+                    values: []
+                },
+                baseRoad: {
+                    min: 0,
+                    max: 10,
+                    ticks: _.range(0, 11, 2),
+                    ticksLabels: _.map(_.range(0, 11, 2), function(tick) {
+                        return tick + '⁰C';
+                    }),
+                    range: [0, 10],
+                    value: 0
+                },
+                varAmbient: {
+                    min: 0,
+                    max: 10,
+                    ticks: _.range(0, 11, 2),
+                    ticksLabels: _.map(_.range(0, 11, 2), function(tick) {
+                        return tick + '⁰C';
+                    }),
+                    range: [0, 10],
+                    values: []
+                },
+                varRoad: {
+                    min: 0,
+                    max: 10,
+                    ticks: _.range(0, 11, 2),
+                    ticksLabels: _.map(_.range(0, 11, 2), function(tick) {
+                        return tick + '⁰C';
+                    }),
+                    range: [0, 10],
+                    values: []
+                },
+                min: 1,
+                max: 8,
+                value: 1
+            },
             wind: {
                 enabled: false,
                 callback: function() {

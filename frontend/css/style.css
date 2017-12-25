@@ -170,3 +170,8 @@ div.randomizer div.selectedCars span.label {
     display: inline-block;
 }
 
+div.randomizer span.temperature {
+    width: 3em;
+    min-width: 3em;
+    display: inline-block;
+}

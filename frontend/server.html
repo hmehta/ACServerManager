@@ -631,7 +631,119 @@
 							</fieldset>
 						
 							<fieldset class="top10">
-								<legend>Weather</legend>
+								<legend>Weather
+                                    <div class="randomizer dropdown {{random.weather.enabled ? 'open' : ''}}">
+                                        <label>Random</label>
+                                        <button type="button"
+                                                class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                ng-click="random.enableRandom('weather')">
+                                        </button>
+                                        <div class="dropdown-menu fluid-container">
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-3">
+                                                    <label># of random weathers</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{random.weather.value}}
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.weather.value"
+                                                            ng-change="random.weather.callback()"
+                                                            min="random.weather.min"
+                                                            max="random.weather.max"
+                                                            value="random.weather.value">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-2">
+                                                    <label>Base ambient temp</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <span class="temperature" ng-repeat="weather in weatherSettings">
+                                                        {{weather.BASE_TEMPERATURE_AMBIENT}}⁰C
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.weather.baseAmbient.range"
+                                                            ng-change="random.weather.baseAmbient.callback()"
+                                                            min="random.weather.baseAmbient.min"
+                                                            max="random.weather.baseAmbient.max"
+                                                            range="true"
+                                                            ticks="random.weather.baseAmbient.ticks"
+                                                            ticks-labels="random.weather.baseAmbient.ticksLabels"
+                                                            value="random.weather.baseAmbient.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-2">
+                                                    <label>Base road temp</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <span class="temperature" ng-repeat="weather in weatherSettings">
+                                                        {{weather.BASE_TEMPERATURE_ROAD}}⁰C
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.weather.baseRoad.range"
+                                                            ng-change="random.weather.baseRoad.callback()"
+                                                            min="random.weather.baseRoad.min"
+                                                            max="random.weather.baseRoad.max"
+                                                            range="true"
+                                                            ticks="random.weather.baseRoad.ticks"
+                                                            ticks-labels="random.weather.baseRoad.ticksLabels"
+                                                            value="random.weather.baseRoad.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-2">
+                                                    <label>Ambient variation</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <span class="temperature" ng-repeat="weather in weatherSettings">
+                                                        {{weather.BASE_VARIATION_AMBIENT}}⁰C
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.weather.varAmbient.range"
+                                                            ng-change="random.weather.varAmbient.callback()"
+                                                            min="random.weather.varAmbient.min"
+                                                            max="random.weather.varAmbient.max"
+                                                            range="true"
+                                                            ticks="random.weather.varAmbient.ticks"
+                                                            ticks-labels="random.weather.varAmbient.ticksLabels"
+                                                            value="random.weather.varAmbient.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group form-group-sm">
+                                                <div class="col-sm-2">
+                                                    <label>Road variation</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <span class="temperature" ng-repeat="weather in weatherSettings">
+                                                        {{weather.BASE_VARIATION_ROAD}}⁰C
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.weather.varRoad.range"
+                                                            ng-change="random.weather.varRoad.callback()"
+                                                            min="random.weather.varRoad.min"
+                                                            max="random.weather.varRoad.max"
+                                                            range="true"
+                                                            ticks="random.weather.varRoad.ticks"
+                                                            ticks-labels="random.weather.varRoad.ticksLabels"
+                                                            value="random.weather.varRoad.range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </legend>
 								<div class="row">
 									<div class="col-sm-12">
 										<button type="button" class="btn btn-danger btn-sm" ng-click="addWeather()">Add Weather</button>
