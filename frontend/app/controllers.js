@@ -175,8 +175,35 @@ angular.module('acServerManager')
         }
     })
 	.controller('ServerCtrl', function ($scope, $filter, $timeout, CarService, TrackService, ServerService, BookService, PracticeService, QualifyService, RaceService, TyreService, WeatherService) {
+        // TODO => services.js
+        var RandomService = {
+            choices: function(list, num) {
+                var randoms = _.slice(list);
+                return _.map(_.range(num), function() {
+                    return _.pullAt(randoms, _.random(0, randoms.length - 1))[0];
+                });
+            },
+        };
+
 		$scope.sessions = [];
 		$scope.alerts = [];
+        $scope.random = {
+            cars: {
+                enabled: true,
+                callback: function() {
+                    $scope.selectedCars = RandomService.choices($scope.cars, $scope.random.cars.value);
+                    $scope.carsChanged(function() {
+                        // NOTE: select all tyres for randomized cars
+                        $scope.selectedTyres = _.map($scope.tyres, 'value');
+                        $scope.tyresChanged();
+                    });
+                },
+                value: 1
+            },
+            track: {
+                enabled: false
+            }
+        };
 		$scope.weatherSettings = [];
 		var newWeather = {
 			GRAPHICS: '3_clear',
@@ -309,7 +336,7 @@ angular.module('acServerManager')
 			$scope.weatherSettings.push(angular.copy(newWeather));
 		};
 		
-		$scope.carsChanged = function() {
+		$scope.carsChanged = function(callback) {
 			if ($scope.selectedCars.length == 0) {
 				$scope.tyres = [];
 				return;
@@ -368,6 +395,10 @@ angular.module('acServerManager')
 							$scope.selectedTyres.push(value.value);
 						});
 					}
+
+                    if (callback !== null && callback !== undefined) {
+                        callback();
+                    }
 				});
 			} catch (e) {
 				console.log('Error - ' + e);
