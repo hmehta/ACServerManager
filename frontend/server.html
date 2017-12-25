@@ -180,12 +180,10 @@
 											<label>Cars</label>
                                             <div class="randomizer dropdown {{random.cars.enabled ? 'open' : ''}}">
                                                 <label>Random</label>
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <toggle-switch class="switch-mini"
-                                                                       ng-model="random.cars.enabled"></toggle-switch>
-                                                    </label>
-                                                </div>
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                        ng-click="random.cars.enabled = !random.cars.enabled">
+                                                </button>
                                                 <div class="dropdown-menu fluid-container">
                                                     <div class="row form-group form-group-sm">
                                                         <div class="col-sm-5">
@@ -217,6 +215,11 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label>Tracks</label>
+                                                    <div class="randomizer">
+                                                        <label>Random</label>
+                                                        <button type="button" ng-click="random.track.callback()"
+                                                                              class="btn btn-default btn-sm pe-7s-shuffle"></button>
+                                                    </div>
 													<select class="form-control" ng-model="selectedTracks" ng-options="track.name as track.name for track in tracks" ng-change="trackChanged()"></select>
 												</div>
 											</div>
