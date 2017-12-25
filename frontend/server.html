@@ -182,6 +182,10 @@
                                             <div class="randomizer dropdown {{random.cars.enabled ? 'open' : ''}}">
                                                 <label>Random</label>
                                                 <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-shuffle"
+                                                        ng-click="random.cars.callback()">
+                                                </button>
+                                                <button type="button"
                                                         class="btn btn-default btn-sm pe-7s-angle-down-circle"
                                                         ng-click="random.enableRandom('cars')">
                                                 </button>
@@ -390,16 +394,14 @@
                                     <div class="randomizer dropdown {{random.wind.enabled ? 'open' : ''}}">
                                         <label>Random</label>
                                         <button type="button"
+                                                class="btn btn-default btn-sm pe-7s-shuffle"
+                                                ng-click="random.wind.callback()">
+                                        </button>
+                                        <button type="button"
                                                 class="btn btn-default btn-sm pe-7s-angle-down-circle"
                                                 ng-click="random.enableRandom('wind')">
                                         </button>
                                         <div class="dropdown-menu fluid-container">
-                                            <div class="row form-group form-group-sm">
-                                                <div class="col-sm-12">
-                                                    <a href="#"
-                                                       ng-click="random.wind.callback()">Randomize all</a>
-                                                </div>
-                                            </div>
                                             <div class="row form-group form-group-sm">
                                                 <div class="col-sm-3">
                                                     Wind base minimum:
@@ -518,6 +520,10 @@
                                             <div class="randomizer dropdown {{random.sunAngle.enabled ? 'open' : ''}}">
                                                 <label>Random</label>
                                                 <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-shuffle"
+                                                        ng-click="random.sunAngle.callback()">
+                                                </button>
+                                                <button type="button"
                                                         class="btn btn-default btn-sm pe-7s-angle-down-circle"
                                                         ng-click="random.enableRandom('sunAngle')">
                                                 </button>
@@ -635,6 +641,10 @@
                                     <div class="randomizer dropdown {{random.weather.enabled ? 'open' : ''}}">
                                         <label>Random</label>
                                         <button type="button"
+                                                class="btn btn-default btn-sm pe-7s-shuffle"
+                                                ng-click="random.weather.callback()">
+                                        </button>
+                                        <button type="button"
                                                 class="btn btn-default btn-sm pe-7s-angle-down-circle"
                                                 ng-click="random.enableRandom('weather')">
                                         </button>
@@ -703,7 +713,7 @@
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <span class="temperature" ng-repeat="weather in weatherSettings">
-                                                        {{weather.BASE_VARIATION_AMBIENT}}⁰C
+                                                        {{weather.VARIATION_AMBIENT}}⁰C
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-7">
@@ -724,7 +734,7 @@
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <span class="temperature" ng-repeat="weather in weatherSettings">
-                                                        {{weather.BASE_VARIATION_ROAD}}⁰C
+                                                        {{weather.VARIATION_ROAD}}⁰C
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-7">
