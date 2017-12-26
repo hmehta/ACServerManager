@@ -179,7 +179,42 @@
 							</fieldset>
 							
 							<fieldset class="top10">
-								<legend>Dynamic Track</legend>
+								<legend>Dynamic Track
+                                    <div class="randomizer dropdown {{random.track.enabled ? 'open' : ''}}">
+                                        <label>Random</label>
+                                        <button type="button"
+                                                class="btn btn-default btn-sm pe-7s-shuffle"
+                                                ng-click="random.track.callback()">
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                ng-click="random.track.enabled = !random.track.enabled">
+                                        </button>
+                                        <div class="dropdown-menu fluid-container">
+                                            <div class="row form-group form-group-sm"
+                                                 ng-repeat="item in random.track.items">
+                                                <div class="col-sm-3">
+                                                    {{random.track[item].title}}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{random.track[item].valueMapping}}{{random.track[item].unit}}
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <slider ng-model="random.track[item].range"
+                                                            ng-change="random.track[item].callback()"
+                                                            min="random.track[item].min"
+                                                            max="random.track[item].max"
+                                                            range="true"
+                                                            ticks="random.track[item].ticks"
+                                                            ticks-labels="random.track[item].ticksLabels"
+                                                            value="random.track[item].range">
+                                                    </slider>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </legend>
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="checkbox">
@@ -322,6 +357,7 @@
 	<script src="js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
 	<script src="js/angular/show-errors.min.js"></script>
     <script src="js/ng-bootstrap-slider.js"></script>
+    <script src="js/lodash.min.js"></script>
 	<script src="app/app.js"></script>
 	<script src="app/angular-toggle-switch.js"></script>
 	<script src="app/services.js"></script>

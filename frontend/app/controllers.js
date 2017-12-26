@@ -174,23 +174,7 @@ angular.module('acServerManager')
             });
         }
     })
-	.controller('ServerCtrl', function ($scope, $filter, $timeout, CarService, TrackService, ServerService, BookService, PracticeService, QualifyService, RaceService, TyreService, WeatherService) {
-        // TODO => services.js
-        var RandomService = {
-            choice: function(list) {
-                return _.nth(list, _.random(0, list.length - 1));
-            },
-            choices: function(list, num) {
-                var randoms = _.slice(list);
-                return _.map(_.range(num), function() {
-                    return _.pullAt(randoms, _.random(0, randoms.length - 1))[0];
-                });
-            },
-            random: function(start, end, floating) {
-                return _.random(start, end, floating);
-            }
-        };
-
+	.controller('ServerCtrl', function ($scope, $filter, $timeout, CarService, RandomService, TrackService, ServerService, BookService, PracticeService, QualifyService, RaceService, TyreService, WeatherService) {
 		$scope.sessions = [];
 		$scope.alerts = [];
         $scope.random = {
@@ -1266,7 +1250,7 @@ angular.module('acServerManager')
             });
         }
     })
-	.controller('RulesCtrl', function($scope, $timeout, ServerService, DynamicTrackService) {
+	.controller('RulesCtrl', function($scope, $timeout, RandomService, ServerService, DynamicTrackService) {
 		$scope.alerts = [];
 		
 		$scope.assistOptions = [
@@ -1283,6 +1267,27 @@ angular.module('acServerManager')
 				name: 'Force On'
 			}
 		];
+
+        $scope.random = {
+            track: {
+                enabled: false,
+                callback: function() {
+                    $scope.random.track.start.callback();
+                    $scope.random.track.gain.callback();
+                    $scope.random.track.randomness.callback();
+                    $scope.random.track.transfer.callback();
+                },
+                start: RandomService.valueRandomizer(
+                    'Session start grip', $scope, ['dynamicTrack', 'SESSION_START'], 0, 100, 92, '%'),
+                gain: RandomService.valueRandomizer(
+                    'Lap gain', $scope, ['dynamicTrack', 'LAP_GAIN'], 1, 20, 2, ' laps'),
+                randomness: RandomService.valueRandomizer(
+                    'Randomness', $scope, ['dynamicTrack', 'RANDOMNESS'], 0, 100, 2, ' rnd'),
+                transfer: RandomService.valueRandomizer(
+                    'Session transfer', $scope, ['dynamicTrack', 'SESSION_TRANSFER'], 0, 100, 85, '%'),
+                items: ['start', 'gain', 'randomness', 'transfer']
+            }
+        };
 		
 		ServerService.GetServerDetails(function (data) {
 			data.AUTOCLUTCH_ALLOWED = data.AUTOCLUTCH_ALLOWED == 1;

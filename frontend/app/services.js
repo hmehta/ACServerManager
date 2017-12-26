@@ -23,6 +23,53 @@ angular.module('acServerManager.services', ['ngResource', 'ngFileUpload']).
             }
         };
     }).
+    factory('RandomService', function($resource) {
+        function choice(list) {
+            return _.nth(list, _.random(0, list.length - 1));
+        }
+
+        function choices(list, num) {
+            var randoms = _.slice(list);
+            return _.map(_.range(num), function() {
+                return _.pullAt(randoms, _.random(0, randoms.length - 1))[0];
+            });
+        }
+
+        function withUnit(unit) {
+            return function(item) {
+                return item + unit;
+            };
+        }
+
+        return {
+            choice: choice,
+            choices: choices,
+            random: _.random,
+            valueRandomizer: function(title, scope, keys, min, max, defaultValue, unit) {
+                var ticks = _.range(min, max + 1, _.floor(max / 5));
+                var randomizer = {
+                    range: [min, max],
+                    ticks: ticks,
+                    ticksLabels: _.map(ticks, withUnit(unit)),
+                    title: title,
+                    unit: unit,
+                    valueMapping: defaultValue,
+                    value: defaultValue
+                };
+                randomizer.callback = function() {
+                    var ref = scope;
+                    var idx = keys.length - 1;
+                    _.forEach(_.slice(keys, 0, idx), function(key) {
+                        ref = ref[key];
+                    });
+                    var value = _.random(min, max);
+                    ref[_.last(keys)] = value;
+                    randomizer.valueMapping = value;
+                };
+                return randomizer;
+            }
+        };
+    }).
 	factory('TrackService', function($resource) {
         return {
             GetTracks: function(callback) {
