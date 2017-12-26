@@ -45,9 +45,10 @@ angular.module('acServerManager.services', ['ngResource', 'ngFileUpload']).
             choice: choice,
             choices: choices,
             random: _.random,
-            valueRandomizer: function(title, scope, keys, min, max, defaultValue, unit) {
-                var ticks = _.range(min, max + 1, _.floor(max / 5));
+            valueRandomizer: function(title, scope, keys, min, max, numTicks, defaultValue, unit) {
+                var ticks = _.range(min, max + 1, _.floor(max / numTicks));
                 var randomizer = {
+                    enabled: false,
                     range: [min, max],
                     ticks: ticks,
                     ticksLabels: _.map(ticks, withUnit(unit)),

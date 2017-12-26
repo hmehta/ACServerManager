@@ -1269,6 +1269,10 @@ angular.module('acServerManager')
 		];
 
         $scope.random = {
+            fuel: RandomService.valueRandomizer(
+                'Fuel rate', $scope, ['server', 'FUEL_RATE'], 0, 1000, 2, 100, '%'),
+            tyreWear: RandomService.valueRandomizer(
+                'Tyre wear', $scope, ['server', 'TYRE_WEAR_RATE'], 0, 1000, 2, 100, '%'),
             track: {
                 enabled: false,
                 callback: function() {
@@ -1278,13 +1282,13 @@ angular.module('acServerManager')
                     $scope.random.track.transfer.callback();
                 },
                 start: RandomService.valueRandomizer(
-                    'Session start grip', $scope, ['dynamicTrack', 'SESSION_START'], 0, 100, 92, '%'),
+                    'Session start grip', $scope, ['dynamicTrack', 'SESSION_START'], 0, 100, 5, 92, '%'),
                 gain: RandomService.valueRandomizer(
-                    'Lap gain', $scope, ['dynamicTrack', 'LAP_GAIN'], 1, 20, 2, ' laps'),
+                    'Lap gain', $scope, ['dynamicTrack', 'LAP_GAIN'], 1, 20, 5, 2, ' laps'),
                 randomness: RandomService.valueRandomizer(
-                    'Randomness', $scope, ['dynamicTrack', 'RANDOMNESS'], 0, 100, 2, ' rnd'),
+                    'Randomness', $scope, ['dynamicTrack', 'RANDOMNESS'], 0, 100, 5, 2, ' rnd'),
                 transfer: RandomService.valueRandomizer(
-                    'Session transfer', $scope, ['dynamicTrack', 'SESSION_TRANSFER'], 0, 100, 85, '%'),
+                    'Session transfer', $scope, ['dynamicTrack', 'SESSION_TRANSFER'], 0, 100, 5, 85, '%'),
                 items: ['start', 'gain', 'randomness', 'transfer']
             }
         };

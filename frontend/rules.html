@@ -282,6 +282,38 @@
 									<div class="col-sm-3">
 										<div class="form-group" show-errors>
 											<label>Fuel Rate</label>
+                                            <div class="randomizer dropdown {{random.fuel.enabled ? 'open' : ''}}">
+                                                <label>Random</label>
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-shuffle"
+                                                        ng-click="random.fuel.callback()">
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                        ng-click="random.fuel.enabled = !random.fuel.enabled">
+                                                </button>
+                                                <div class="dropdown-menu fluid-container">
+                                                    <div class="row form-group form-group-sm">
+                                                        <div class="col-sm-3">
+                                                            <label>Fuel rate</label>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            {{random.fuel.valueMapping}}{{random.fuel.unit}}
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <slider ng-model="random.fuel.range"
+                                                                    ng-change="random.fuel.callback()"
+                                                                    min="random.fuel.min"
+                                                                    max="random.fuel.max"
+                                                                    range="true"
+                                                                    ticks="random.fuel.ticks"
+                                                                    ticks-labels="random.fuel.ticksLabels"
+                                                                    value="random.fuel.range">
+                                                            </slider>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 											<input class="form-control" name="fuel_rate" ng-model="server.FUEL_RATE" required/>
 										</div>
 									</div>
@@ -289,6 +321,39 @@
 									<div class="col-sm-3">
 										<div class="form-group" show-errors>
 											<label>Tyre Wear Rate</label>
+                                            <div class="randomizer dropdown {{random.tyreWear.enabled ? 'open' : ''}}">
+                                                <label>Random</label>
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-shuffle"
+                                                        ng-click="random.tyreWear.callback()">
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm pe-7s-angle-down-circle"
+                                                        ng-click="random.tyreWear.enabled = !random.tyreWear.enabled">
+                                                </button>
+                                                <div class="dropdown-menu fluid-container">
+                                                    <div class="row form-group form-group-sm">
+                                                        <div class="col-sm-3">
+                                                            <label>Fuel rate</label>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            {{random.tyreWear.valueMapping}}{{random.tyreWear.unit}}
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <slider ng-model="random.tyreWear.range"
+                                                                    ng-change="random.tyreWear.callback()"
+                                                                    min="random.tyreWear.min"
+                                                                    max="random.tyreWear.max"
+                                                                    range="true"
+                                                                    ticks="random.tyreWear.ticks"
+                                                                    ticks-labels="random.tyreWear.ticksLabels"
+                                                                    value="random.tyreWear.range">
+                                                            </slider>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 											<input class="form-control" name="tyre_wear_rate" ng-model="server.TYRE_WEAR_RATE" required/>
 										</div>
 									</div>
