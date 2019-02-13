@@ -1123,7 +1123,7 @@ app.delete('/api/templates/:uuid', function (req, res) {
 });
 
 
-// get fronend index page
+// get frontend index page
 app.get('*', function (req, res) {
 	res.sendFile(__dirname + '/frontend/index.html');
 });
