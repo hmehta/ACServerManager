@@ -188,7 +188,12 @@ angular.module('acServerManager')
 			BASE_TEMPERATURE_AMBIENT: '20',
 			BASE_TEMPERATURE_ROAD: '7',
 			VARIATION_AMBIENT: '2',
-			VARIATION_ROAD: '2'
+			VARIATION_ROAD: '2',
+			WIND_BASE_SPEED_MIN: '3',
+			WIND_BASE_SPEED_MAX: '15',
+			WIND_BASE_DIRECTION: '30',
+			WIND_VARIATION_DIRECTION: '15'
+
 		};
 		
 		BookService.GetBookingDetails(function (data) {
