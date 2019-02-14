@@ -188,7 +188,12 @@ angular.module('acServerManager')
 			BASE_TEMPERATURE_AMBIENT: '20',
 			BASE_TEMPERATURE_ROAD: '7',
 			VARIATION_AMBIENT: '2',
-			VARIATION_ROAD: '2'
+			VARIATION_ROAD: '2',
+			WIND_BASE_SPEED_MIN: '3',
+			WIND_BASE_SPEED_MAX: '15',
+			WIND_BASE_DIRECTION: '30',
+			WIND_VARIATION_DIRECTION: '15'
+
 		};
 		
 		BookService.GetBookingDetails(function (data) {
@@ -360,7 +365,7 @@ angular.module('acServerManager')
 						tyre.description = description.trim();
 						$scope.tyres.push(tyre);
 					});
-					
+
 					//Remove any selected tyres that are no longer available after a car change
 					$scope.selectedTyres = $scope.selectedTyres.filter(function(element) {
 						var found = findInArray($scope.tyres, { value: element });
@@ -373,19 +378,34 @@ angular.module('acServerManager')
 							$scope.selectedTyres.push(value.value);
 						});
 					}
+
+					// if tyre is set in cfg, check its checkbox
+					angular.forEach($scope.selectedTyres, function(value, key) {
+						let obj = $scope.tyres.find(obj => obj.value == value);
+						if(obj){
+							obj.isChecked = true;
+						}
+
+					});
+
 				});
 			} catch (e) {
 				console.log('Error - ' + e);
 			}
 		}
-		
+
 		$scope.tyresChanged = function() {
 			//If there are no selected tyres in cfg, this is the same as having all available
+
+			$scope.selectedTyres = $scope.tyres.filter(obj => obj.isChecked);
+			$scope.selectedTyres = $scope.selectedTyres.map(obj => obj.value);
+
 			if ($scope.selectedTyres.length === 0) {
 				angular.forEach($scope.tyres, function(value, key) {
 					$scope.selectedTyres.push(value.value);
 				});
 			}
+
 		}
 		
 		$scope.trackChanged = function() {
@@ -437,10 +457,14 @@ angular.module('acServerManager')
 					data.SUN_ANGLE = getSunAngle($scope.hours, $scope.mins);
 				}
 
+				if($scope.selectedTyres.length){
+					data.LEGAL_TYRES = $scope.selectedTyres.join(';');
+				}
+
 				if (typeof $scope.tyres.length === 'undefined' || !$scope.tyres.length){
 					data.LEGAL_TYRES = $scope.selectedTyres.length === $scope.tyres.length ? '' : $scope.selectedTyres.join(';');
 				}
-				
+
 				var saved = true;
 				
 				ServerService.SaveServerDetails(data, function(result) {
