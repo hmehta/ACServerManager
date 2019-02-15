@@ -184,7 +184,7 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label>Configuration</label>
-													<select class="form-control" ng-model="server.CONFIG_TRACK" ng-options="config as config for config in configs"></select>
+													<select class="form-control" ng-model="server.CONFIG_TRACK" ng-options="config as config for config in configs" ng-change="trackChanged()"></select>
 												</div>
 											</div>
 										</div>
