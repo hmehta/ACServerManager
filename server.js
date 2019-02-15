@@ -600,17 +600,12 @@ app.get('/api/tracks', function (req, res) {
 
 			try {
 				var configs = getDirectories(contentPath + '/tracks/' + trackNames[trackName] + '/ui');
-				console.log("1 "+configs);
-
 				var singleLayout = isSingleLayout(contentPath + '/tracks/' + trackNames[trackName] + '/ui');
 
 				if(singleLayout && configs.length > 0){
-					console.log("Adding empty for "+contentPath + '/tracks/' + trackNames[trackName] + '/ui');
 					configs.push('Default_layout');
-				} else {
-					console.log("ei ollut singlelayout");
 				}
-				console.log("2 "+configs);
+
 				track.configs = configs;
 			}
 			catch (e) {
