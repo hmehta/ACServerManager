@@ -26,7 +26,10 @@ angular.module('acServerManager.services', ['ngResource']).
                 });
             },
 			GetTrackDetails: function(track, config, callback) {
-				if (config) {
+
+                // "default layout" loads the main track data
+                // Todo, make "Default_layout" configurable
+				if (config && config != "Default_layout") {
 					var resource = $resource('/api/tracks/:track/:config');
 					var result = resource.get({track: track, config: config}, function() {
 						callback(result);

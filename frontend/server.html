@@ -168,6 +168,16 @@
 											<label>Cars</label>
 											<select multiple size="10" class="form-control" ng-model="selectedCars" ng-options="car as car for car in cars" ng-change="carsChanged()"></select>
 										</div>
+
+										<div class="form-group">
+											<label>Tyres</label>
+
+											<div ng-repeat="tyre in tyres">
+												<label><input type="checkbox" style="margin-right: 5px;" ng-model="tyre.isChecked" value="{{tyre.value}}" ng-change="tyresChanged(tyre)">{{tyre.description}}</label>
+											</div>
+
+										</div>
+
 									</div>
 									
 									<div class="col-sm-6">
@@ -184,7 +194,7 @@
 											<div class="col-sm-12">
 												<div class="form-group">
 													<label>Configuration</label>
-													<select class="form-control" ng-model="server.CONFIG_TRACK" ng-options="config as config for config in configs"></select>
+													<select class="form-control" ng-model="server.CONFIG_TRACK" ng-options="config as config for config in configs" ng-change="trackChanged()"></select>
 												</div>
 											</div>
 										</div>
@@ -208,18 +218,6 @@
 									</div>
 								</div>
 								
-								<div class="row">
-									<div class="col-sm-12">
-										<div class="form-group">
-											<label>Tyres</label>
-
-                                            <div ng-repeat="tyre in tyres">
-                                                <label><input type="checkbox" style="margin-right: 5px;" ng-model="tyre.isChecked" value="{{tyre.value}}" ng-change="tyresChanged(tyre)">{{tyre.description}}</label>
-                                            </div>
-
-										</div>
-									</div>
-								</div>
 							</fieldset>
 							
 							<fieldset class="top10">

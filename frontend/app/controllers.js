@@ -411,21 +411,24 @@ angular.module('acServerManager')
 		$scope.trackChanged = function() {
 			var track = findInArray($scope.tracks, {name: $scope.selectedTracks})
 			if (track !== null) {
+
+				//if (track.configs && track.configs.length && $scope.server.CONFIG_TRACK != 'Default_layout') {
 				if (track.configs && track.configs.length) {
 					$scope.configs = track.configs;
 					var index = $scope.configs.indexOf($scope.server.CONFIG_TRACK);
 					var index = (index !== -1) ? index : 0;
 					$scope.server.CONFIG_TRACK = $scope.configs[index];
-					
+
 					TrackService.GetTrackDetails(track.name, $scope.server.CONFIG_TRACK, function(data) {
 						$scope.trackDetails = data;
 					});
-					
-					$scope.trackImage = '/api/tracks/' + $scope.selectedTracks + '/' + $scope.server.CONFIG_TRACK + '/image';
+
+					var trackImagePath = '/api/tracks/' + $scope.selectedTracks + '/' + $scope.server.CONFIG_TRACK + '/image';
+					$scope.trackImage = trackImagePath.replace("/Default_layout", "");
 				} else {
 					$scope.configs = null;
 					$scope.server.CONFIG_TRACK = '';
-					
+
 					TrackService.GetTrackDetails(track.name, null, function(data) {
 						$scope.trackDetails = data;
 					});

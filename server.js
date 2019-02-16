@@ -74,6 +74,18 @@ function getDirectories(srcpath) {
 	}
 }
 
+function isSingleLayout(srcpath){
+	try {
+		return fs.readFileSync(srcpath+'/ui_track.json', 'utf8');
+
+	} catch (e) {
+
+		return false;
+	}
+
+
+}
+
 function getDateTimeString() {
 	try {
 		var d = new Date();
@@ -536,7 +548,6 @@ app.post('/api/dynamictrack/:id', function (req, res) {
 app.get('/api/weather', function (req, res) {
 	try {
 		var weather = [];
-
 		Object.keys(config).forEach(function (key) {
 			if (key.indexOf('WEATHER_') === 0) {
 				weather.push(config[key]);
@@ -589,6 +600,12 @@ app.get('/api/tracks', function (req, res) {
 
 			try {
 				var configs = getDirectories(contentPath + '/tracks/' + trackNames[trackName] + '/ui');
+				var singleLayout = isSingleLayout(contentPath + '/tracks/' + trackNames[trackName] + '/ui');
+
+				if(singleLayout && configs.length > 0){
+					configs.push('Default_layout');
+				}
+
 				track.configs = configs;
 			}
 			catch (e) {
@@ -640,7 +657,7 @@ app.get('/api/tracks/:track/image', function (req, res) {
 app.get('/api/tracks/:track/:config', function (req, res) {
 	try {
 		contentPath = checkLocalContentPath(contentPath);
-		var trackDetails = fs.readFileSync(contentPath + '/tracks/' + req.params.track + '/ui/' + req.params.config + '/ui_track.json', 'utf-8');
+		var trackDetails = fs.readFileSync(contentPath + '/tracks/' + req.params.track + '/ui/' + req.params.config.replace('Default_layout','') + '/ui_track.json', 'utf-8');
 		res.status(200);
 		res.send(trackDetails);
 	} catch (e) {
@@ -654,7 +671,7 @@ app.get('/api/tracks/:track/:config', function (req, res) {
 app.get('/api/tracks/:track/:config/image', function (req, res) {
 	try {
 		contentPath = checkLocalContentPath(contentPath);
-		var image = fs.readFileSync(contentPath + '/tracks/' + req.params.track + '/ui/' + req.params.config + '/preview.png');
+		var image = fs.readFileSync(contentPath + '/tracks/' + req.params.track + '/ui/' + req.params.config.replace('Default_layout','') + '/preview.png');
 		res.status(200);
 		res.contentType('image/jpeg');
 		res.send(image);
